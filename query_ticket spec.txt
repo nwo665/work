@@ -36,7 +36,7 @@
       - Issue description
 	  
 Case: success
-- If created tickets is 6
+- Ticket has been created.(6 entries)
 - account_id=1&page_size=3&page=1
 
 ``` json
