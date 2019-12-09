@@ -1,0 +1,79 @@
+## Query Tickets
+
+- Path: /storefront/${api_version}/ticket/query
+- Input parameters: account_id, page, page_size
+  - **account_id**
+      - Indicate which user's created tickets should be returned to caller
+  - **page_size**
+      - Indicate how many created tickets should be returned for each page. 
+      - When **page_size** is zero, all created tickets of the indicated user will be returned
+  - **page**
+      - Indicate which page of the created tickets should be returned.
+	  - When page_size is not equal to zero, page MUST greater than zero
+- HTTP method: GET
+- Request query string
+  - account_id=1&page_size=5&page=1
+  
+- Response
+  - **Return created tickets is new to old**
+  - **reporter_email**
+      - The Reporter's Email Address
+  - **total_page**
+      - Indicates how many pages could be paginated by caller
+	  - When page_size is zero, total_page will 1 
+	  - Otherwise total_page is equal to tickets/page_size
+  - **createTime**
+      - Ticket create time
+  - **ticketNo**
+      - Created ticket
+  - **subject**
+      - Used for the Mail Subject
+  - **ticketStatus**
+      - Ticket status
+  - **severity**
+      - Ticket severity
+  - **issueDescription**
+      - Issue description
+	  
+Case: success
+- If created tickets is 6
+- account_id=1&page_size=3&page=1
+
+``` json
+{
+  "code": 1,
+  "name": "EC_CODE_SUCCESS",
+  "message": "OK",
+  "display": "",
+  "result": {
+	"reporter_email": "kenny.chang@zyxel.com.tw",
+    "total_page": 2,
+    "page_data": [
+	  {
+		"createTime":"2019-12-03 15:32:08",
+		"ticketNo":"191200121",
+		"subject":"Test Issue",
+		"ticketStatus":"Dead",
+		"severity":"Medium",
+		"issueDescription":"Hi Kenny Chang, <br/><br/>We have received your message about:<br/>[Test & Payment] Test Issue<br/><br/>We will get back to you soon!<br/><br/>Your Message:<br/>yyyy<br/><br/>Zyxel Account: peter.wang@zyxel.com.tw<br/><br/>Thank you,<br/>Zyxel Marketplace Support Team"
+      },
+      {
+		"createTime":"2019-12-03 15:29:20",
+		"ticketNo":"191200109",
+		"subject":"Test Issue",
+		"ticketStatus":"Dead",
+		"severity":"Medium",
+		"issueDescription":"Hi Kenny Chang, <br/><br/>We have received your message about:<br/>[Test & Payment] Test Issue<br/><br/>We will get back to you soon!<br/><br/>Your Message:<br/>yyyy<br/><br/>Zyxel Account: peter.wang@zyxel.com.tw<br/><br/>Thank you,<br/>Zyxel Marketplace Support Team"
+      },
+	  {
+		"createTime":"2019-12-03 15:29:10",
+		"ticketNo":"191200107",
+		"subject":"Test Issue",
+		"ticketStatus":"Dead",
+		"severity":"Medium",
+		"issueDescription":"Hi Kenny Chang, <br/><br/>We have received your message about:<br/>[Test & Payment] Test Issue<br/><br/>We will get back to you soon!<br/><br/>Your Message:<br/>yyyy<br/><br/>Zyxel Account: peter.wang@zyxel.com.tw<br/><br/>Thank you,<br/>Zyxel Marketplace Support Team"
+      }
+    ]
+  }
+}
+```
