@@ -1,0 +1,41 @@
+title Query EITS Tickets
+
+
+autoactivation on
+
+participant Storefront
+participant Backend API
+database EC DB#white
+participant EITS Server
+
+Storefront->Backend API:Create eits tickets using http post method
+
+Backend API->EITS Server:Create eits ticket
+
+Backend API<--EITS Server:Reruen created eits ticket
+
+Backend API->EC DB:Insert created eits ticket to db
+
+Storefront<--Backend API:Reruen created eits ticket to frontend
+
+Storefront->Backend API:Query eits tickets using http get method
+
+alt Query all tickets
+loop tickets / 20
+Backend API-> EC DB: Query **++20 entries++** from ticket table by account id
+Backend API<-- EC DB: Sort created ticket **++new to old++**
+
+Backend API->EITS Server: Query Ticket Info by account id and ticketNo
+Backend API<--EITS Server: Get created tickets from EITS Server
+
+end
+
+else Query partial tickets (Page > 0 & Page size > 0)
+Backend API-> EC DB: Query **++page size++** entries from ticket table by account id
+Backend API<-- EC DB: Sort created ticket **++new to old++**
+
+Backend API->EITS Server: Query Ticket Info by account id and ticketNo
+Backend API<--EITS Server: Get created tickets from EITS Server
+end
+
+Storefront<--Backend API: Response created tickets 
